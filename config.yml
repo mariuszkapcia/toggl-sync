@@ -1,0 +1,15 @@
+toggl_sync:
+  # show logs on terminal
+  verbose: true
+  # append '[created by TogglSync]' message to each worklog
+  add_tag_to_worklogs: true
+  toggl:
+    # api token, available on web page
+    api_token: 'api_token'
+  jira:
+    # account username, e.g a.test
+    username: 'username'
+    # account password
+    password: 'password'
+    # site
+    site:     'https://nomtek.atlassian.net'

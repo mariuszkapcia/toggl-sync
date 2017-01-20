@@ -1,0 +1,34 @@
+current directory: /Users/mariuszkapcia/Praca/projekty/toggl_integration/vendor/bundle/gems/oj-2.18.1/ext/oj
+/Users/mariuszkapcia/.rbenv/versions/2.4.0/bin/ruby -r ./siteconf20170118-18969-dybg15.rb extconf.rb
+>>>>> Creating Makefile for ruby version 2.4.0 on x86_64-darwin16 <<<<<
+creating Makefile
+
+current directory: /Users/mariuszkapcia/Praca/projekty/toggl_integration/vendor/bundle/gems/oj-2.18.1/ext/oj
+make "DESTDIR=" clean
+
+current directory: /Users/mariuszkapcia/Praca/projekty/toggl_integration/vendor/bundle/gems/oj-2.18.1/ext/oj
+make "DESTDIR="
+compiling cache8.c
+compiling circarray.c
+compiling compat.c
+compiling dump.c
+compiling err.c
+compiling fast.c
+compiling hash.c
+compiling hash_test.c
+compiling object.c
+compiling odd.c
+compiling oj.c
+compiling parse.c
+compiling reader.c
+compiling resolve.c
+compiling saj.c
+compiling scp.c
+compiling sparse.c
+compiling strict.c
+compiling val_stack.c
+linking shared-object oj/oj.bundle
+
+current directory: /Users/mariuszkapcia/Praca/projekty/toggl_integration/vendor/bundle/gems/oj-2.18.1/ext/oj
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 oj.bundle ./.gem.20170118-18969-kx60zb/oj

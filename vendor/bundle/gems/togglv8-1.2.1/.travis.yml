@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - ruby-head
+script: bundle exec rspec
+cache: bundler
+branches:
+  only:
+    - master
+addons:
+  code_climate:
+    repo_token: eb44970f9efc497fb68c6ec1ce051dea530776b6a5bbe75e57734625f761ac86

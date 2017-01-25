@@ -7,7 +7,8 @@ module Jira
       new_worklog = issue.worklogs.build
       new_worklog.save!({
         comment:          worklog.message,
-        timeSpentSeconds: worklog.duration
+        timeSpentSeconds: worklog.duration,
+        started:          worklog.started
       })
     rescue StandardError
       raise Jira::AdapterError.new, ''

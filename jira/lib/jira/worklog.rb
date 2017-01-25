@@ -1,6 +1,6 @@
 module Jira
   class Worklog
-    attr_reader :issue_key, :duration, :message
+    attr_reader :issue_key, :duration, :message, :started
 
     def valid?
       !issue_key.nil?
@@ -10,7 +10,8 @@ module Jira
       {
         issue_key:  issue_key,
         duration:   duration,
-        message:    message
+        message:    message,
+        started:    started
       }.to_s
     end
 
@@ -23,6 +24,7 @@ module Jira
       @issue_key  = find_issue_key(time_entry.description)
       @duration   = time_entry.duration
       @message    = parse_message(@issue_key, time_entry.description)
+      @started    = time_entry.started
     end
 
     def find_issue_key(text)

@@ -4,7 +4,7 @@ TogglSync jes to skrypt w Rubym służący do synchronizacji pomiędzy [Toggl](h
 
 ## Wymagania
 
-Zainstalowane Ruby.
+Zainstalowane Ruby w wersji 2.3.x lub nowszej.
 
 ## Instalacja
 

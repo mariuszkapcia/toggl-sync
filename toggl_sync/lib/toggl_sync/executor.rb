@@ -19,7 +19,7 @@ module TogglSync
 
     def sync(number_of_days)
       time_entries = fetch_time_entries(number_of_days)
-      time_entries.each_with_index do |time_entry, index|
+      time_entries.each do |time_entry|
         begin
           log_with_carriage(time_entry, :syncing)
           worklog = Jira::Worklog.new(config: config, time_entry: time_entry)
@@ -59,14 +59,14 @@ module TogglSync
     def log_with_carriage(time_entry, status)
       message = "[#{time_entry.display_start_time}] "\
                 "#{time_entry.display_description} "\
-                "#{status.to_s.humanize.downcase}"
+                '%-50.50s' % "#{status.to_s.humanize.downcase}"
       TogglSync::Logger.instance.log_with_carriage(message)
     end
 
     def log_with_newline(time_entry, status)
       message = "[#{time_entry.display_start_time}] "\
                 "#{time_entry.display_description} "\
-                "#{status.to_s.humanize.downcase}"
+                '%-50.50s' % "#{status.to_s.humanize.downcase}"
       TogglSync::Logger.instance.log_with_newline(message)
     end
   end

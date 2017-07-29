@@ -32,11 +32,20 @@ begin
   arguments_handler = ArgumentsHandler.new(ARGV)
   toggl_sync        = TogglSync::Executor.new(config: toggl_config)
 
-  toggl_sync.since(arguments_handler.since_date)
+  case arguments_handler.method
+  when 'since'
+    toggl_sync.since(arguments_handler.since_date)
+  when 'days_ago'
+    toggl_sync.days_ago(arguments_handler.days_ago)
+  else
+    raise TogglSync::UnknownMethod
+  end
 rescue TogglSync::ConfigurationLoadError
   TogglSync::Logger.instance.error("Loading TogglSync configuration failure")
 rescue TogglSync::DateParseError
   TogglSync::Logger.instance.error("Parsing date failure")
+rescue TogglSync::UnknownMethod
+  TogglSync::Logger.instance.error("Unknown method was passed")
 rescue StandardError => exception
   TogglSync::Logger.instance.error("Unknown eror with message '#{exception}'")
 end

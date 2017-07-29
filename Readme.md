@@ -35,21 +35,42 @@ toggl_sync:
 
 ## Używanie
 
-Skrypt można wywołać na dwa sposoby:
-- Bez parametru zostanie uruchomiona synchronizacja dzisiejszego dnia.
-- Z parametrem zostanie uruchomiona synchronizacja od podanej daty (dd-mm-yyyy).
-
-```ruby
-ruby toggl_sync.rb
-ruby toggl_sync.rb '15-01-2017'
-```
-
 Każdy wpis z Toggl zawierający w swoim opisie `jira-issue-key` zostanie zsynchronizowany oraz oznaczony tag'iem (`jira-issue-key` zostanie usunięte z opisu).
 
 ```
 NG-1 Meeting
 very important time entry ng-101
 another sl-54 sophisticated example
+```
+
+Wywołanie skryptu:
+
+```ruby
+ruby toggl_sync.rb [metoda] [parametr]
+```
+
+Dostępne są dwie metody `since` oraz `days_ago`.
+
+### since
+
+Skrypt można wywołać na dwa sposoby:
+- Bez parametru zostanie uruchomiona synchronizacja dzisiejszego dnia.
+- Z parametrem zostanie uruchomiona synchronizacja od podanej daty (dd-mm-yyyy).
+
+```ruby
+ruby toggl_sync.rb since
+ruby toggl_sync.rb since '15-01-2017'
+```
+
+### days_ago
+
+Skrypt można wywołać na dwa sposoby:
+- Bez parametru zostanie uruchomiona synchronizacja dzisiejszego dnia.
+- Z parametrem zostanie uruchomiona synchronizacja wskazanej ilości dni w przeszłość
+
+```ruby
+ruby toggl_sync.rb days_ago
+ruby toggl_sync.rb days_ago 1
 ```
 
 ## Licencja

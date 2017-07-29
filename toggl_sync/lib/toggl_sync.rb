@@ -1,6 +1,7 @@
 module TogglSync
   ConfigurationLoadError  = Class.new(StandardError)
   DateParseError          = Class.new(StandardError)
+  UnknownMethod           = Class.new(StandardError)
 end
 
 require_relative 'toggl_sync/logger'

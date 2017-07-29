@@ -1,3 +1,7 @@
+### 2.0.0 (29.07.2017)
+
+* Dodanie nowej metody `days_ago` oraz zmiana sposobu wywoływania skryptu.
+
 ### 1.1.0 (29.07.2017)
 
 * Aktualizacja minimalnej wersji Ruby w Readme.

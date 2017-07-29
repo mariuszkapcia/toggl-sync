@@ -7,6 +7,10 @@ module TogglSync
       sync(number_of_days)
     end
 
+    def days_ago(number_of_days)
+      sync(number_of_days)
+    end
+
     private
 
     attr_reader :config, :toggl_adapter, :jira_adapter

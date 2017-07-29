@@ -1,12 +1,9 @@
 module TogglSync
   class Executor
-    def since(date_string)
+    def since(date)
       date_string     ||= Date.today.to_s
-      number_of_days  = TogglSync::Utils.days_ago(
-        TogglSync::Utils.date(date_string)
-      )
+      number_of_days  = TogglSync::Utils.days_ago(date)
 
-      TogglSync::Logger.instance.log("syncing #{number_of_days} days")
       sync(number_of_days)
     end
 
@@ -22,17 +19,25 @@ module TogglSync
 
     def sync(number_of_days)
       time_entries = fetch_time_entries(number_of_days)
-      time_entries.each do |time_entry|
-        TogglSync::Logger.instance.log("syncing time entry '#{time_entry.description}'")
-        worklog = Jira::Worklog.new(config: config, time_entry: time_entry)
-        if can_sync?(time_entry) && worklog.valid?
-          jira_adapter.push_worklog(worklog)
-          time_entry.tag_as_synced
-          toggl_adapter.push_time_entry_tags(time_entry)
-          TogglSync::Logger.instance.log('time entry synced')
-        else
-          reason = out_of_sync_reason(time_entry, worklog)
-          TogglSync::Logger.instance.log("time entry can't be synced, reason: '#{reason}'")
+      time_entries.each_with_index do |time_entry, index|
+        begin
+          log_with_carriage(time_entry, :syncing)
+          worklog = Jira::Worklog.new(config: config, time_entry: time_entry)
+          if can_sync?(time_entry) && worklog.valid?
+            jira_adapter.push_worklog(worklog)
+            time_entry.tag_as_synced
+            toggl_adapter.push_time_entry_tags(time_entry)
+            log_with_newline(time_entry, :synced)
+          else
+            reason = out_of_sync_reason(time_entry, worklog)
+            log_with_newline(time_entry, reason)
+          end
+        rescue Toggl::AdapterError => exception
+          log_with_newline(time_entry, "toggl failure, reason: #{exception.message}")
+        rescue Jira::AdapterError => exception
+          log_with_newline(time_entry, "jira failure, reason: #{exception.message}")
+        rescue StandardError => exception
+          log_with_newline(time_entry, "toggl-sync failure, reason: #{exception.message}")
         end
       end
     end
@@ -46,10 +51,23 @@ module TogglSync
     end
 
     def out_of_sync_reason(time_entry, worklog)
-      return 'still running'      if time_entry.running?
-      return 'already synced'     if time_entry.synced?
-      return 'missing issue key'  if !worklog.valid?
-      'unknown'
+      return :still_running     if time_entry.running?
+      return :already_synced    if time_entry.synced?
+      return :missing_issue_key if !worklog.valid?
+    end
+
+    def log_with_carriage(time_entry, status)
+      message = "[#{time_entry.display_start_time}] "\
+                "#{time_entry.display_description} "\
+                "#{status.to_s.humanize.downcase}"
+      TogglSync::Logger.instance.log_with_carriage(message)
+    end
+
+    def log_with_newline(time_entry, status)
+      message = "[#{time_entry.display_start_time}] "\
+                "#{time_entry.display_description} "\
+                "#{status.to_s.humanize.downcase}"
+      TogglSync::Logger.instance.log_with_newline(message)
     end
   end
 end

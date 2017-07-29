@@ -29,20 +29,14 @@ require 'toggl_sync'
 begin
   toggl_config      = TogglSync::Configuration.new('./config.yml')
   TogglSync::Logger.instance.verbose(toggl_config.verbose)
-  TogglSync::Logger.instance.log('starting new session')
   arguments_handler = ArgumentsHandler.new(ARGV)
   toggl_sync        = TogglSync::Executor.new(config: toggl_config)
 
   toggl_sync.since(arguments_handler.since_date)
-  TogglSync::Logger.instance.log("ending session \n")
 rescue TogglSync::ConfigurationLoadError
-  TogglSync::Logger.instance.error("Loading TogglSync configuration failure \n")
+  TogglSync::Logger.instance.error("Loading TogglSync configuration failure")
 rescue TogglSync::DateParseError
-  TogglSync::Logger.instance.error("Parsing date failure \n")
-rescue Toggl::AdapterError
-  TogglSync::Logger.instance.error("Toggl servers communication failure \n")
-rescue Jira::AdapterError
-  TogglSync::Logger.instance.error("Jira servers communication failure \n")
+  TogglSync::Logger.instance.error("Parsing date failure")
 rescue StandardError => exception
-  TogglSync::Logger.instance.error("Unknown eror with message '#{exception}' \n")
+  TogglSync::Logger.instance.error("Unknown eror with message '#{exception}'")
 end

@@ -1,6 +1,6 @@
 module Jira
   class Worklog
-    attr_reader :issue_key, :duration, :message, :started
+    attr_reader :issue_key, :duration, :message, :start_time
 
     def valid?
       !issue_key.nil?
@@ -11,7 +11,7 @@ module Jira
         issue_key:  issue_key,
         duration:   duration,
         message:    message,
-        started:    started
+        start_time: start_time
       }.to_s
     end
 
@@ -24,7 +24,7 @@ module Jira
       @issue_key  = find_issue_key(time_entry.description)
       @duration   = time_entry.duration
       @message    = parse_message(@issue_key, time_entry.description)
-      @started    = time_entry.started
+      @start_time = parse_start_datetime(time_entry.start_time)
     end
 
     def find_issue_key(text)
@@ -43,6 +43,10 @@ module Jira
 
     def issue_key_regex
       /(?:\s|^)([A-Za-z]+-[0-9]+)(?=\s|$)/i
+    end
+
+    def parse_start_datetime(datetime)
+      DateTime.parse(datetime).utc.strftime("%Y-%m-%dT%H:%M:%S.%L%z")
     end
   end
 end

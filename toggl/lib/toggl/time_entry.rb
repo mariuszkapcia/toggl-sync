@@ -1,6 +1,6 @@
 module Toggl
   class TimeEntry
-    attr_reader :id, :duration, :tags, :running, :description, :started
+    attr_reader :id, :duration, :tags, :running, :description, :start_time
 
     def running?
       running
@@ -14,6 +14,14 @@ module Toggl
       tags.push(jira_sync_tag)
     end
 
+    def display_start_time
+      DateTime.parse(start_time).utc.strftime("%Y-%m-%d %H:%M:%S")
+    end
+
+    def display_description
+      '%-100.100s' % description.gsub(/^(.{95,}?).*$/m,'\1...')
+    end
+
     def to_s
       {
         id:           id,
@@ -21,7 +29,7 @@ module Toggl
         tags:         tags,
         running:      running,
         description:  description,
-        started:      started
+        start_time:   start_time
       }.to_s
     end
 
@@ -33,15 +41,11 @@ module Toggl
       @tags         = data['tags'].to_a
       @running      = data['duration'] < 0
       @description  = data['description']
-      @started      = parse_start_datetime(data['start'])
+      @start_time   = data['start']
     end
 
     def jira_sync_tag
       'synced-with-jira'
-    end
-
-    def parse_start_datetime(datetime)
-      DateTime.parse(datetime).utc.strftime("%Y-%m-%dT%H:%M:%S.%L%z")
     end
   end
 end

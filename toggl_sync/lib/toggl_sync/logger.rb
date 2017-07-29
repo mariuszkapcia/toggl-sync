@@ -15,14 +15,19 @@ module TogglSync
       @verbose = flag
     end
 
-    def log(msg)
-      @logger.info(msg)
-      puts "[INFO] #{msg}" if @verbose
+    def log_with_carriage(msg)
+      @logger << "#{msg}\r"
+      print("#{msg}\r") if @verbose
+    end
+
+    def log_with_newline(msg)
+      @logger << "#{msg}\n"
+      print("#{msg}\n") if @verbose
     end
 
     def error(msg)
-      @logger.error(msg)
-      puts "[ERROR] #{msg}" if @verbose
+      @logger << "[ERROR] #{msg}\n"
+      print("[ERROR] #{msg}\n") if @verbose
     end
 
     private_class_method :new

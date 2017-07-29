@@ -8,8 +8,8 @@ module Toggl
         end_date: (Date.today + 1).to_s
       )
       parse_time_entries(response)
-    rescue StandardError
-      raise Toggl::AdapterError.new, ''
+    rescue StandardError => exception
+      raise Toggl::AdapterError.new, exception.message
     end
 
     def get_time_entry(time_entry)

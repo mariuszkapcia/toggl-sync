@@ -55,7 +55,7 @@ module TogglSync
     end
 
     def out_of_sync_reason(time_entry, worklog)
-      return :still_running     if time_entry.running?
+      return :running           if time_entry.running?
       return :already_synced    if time_entry.synced?
       return :missing_issue_key if !worklog.valid?
     end

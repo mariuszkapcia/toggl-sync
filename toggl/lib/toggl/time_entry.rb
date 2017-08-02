@@ -19,6 +19,7 @@ module Toggl
     end
 
     def display_description
+      return '%-100.100s' % '' if description.nil?
       '%-100.100s' % description.gsub(/^(.{95,}?).*$/m,'\1...')
     end
 

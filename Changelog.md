@@ -1,3 +1,7 @@
+### 2.0.1 (02.08.2017)
+
+* Naprawienie poprawnego wyświetlania aktualnie trwającego wpisu w Toggl.
+
 ### 2.0.0 (29.07.2017)
 
 * Dodanie nowej metody `days_ago` oraz zmiana sposobu wywoływania skryptu.

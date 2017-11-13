@@ -1,18 +1,18 @@
 # TogglSync
 
-TogglSync jes to skrypt w Rubym służący do synchronizacji pomiędzy [Toggl](http://www.toggl.com) a [JIRA](https://www.atlassian.com/software/jira).
+TogglSync is a script written in ruby to synchronize [Toggl](http://www.toggl.com) and [JIRA](https://www.atlassian.com/software/jira).
 
-## Wymagania
+## Requirements
 
-Zainstalowane Ruby w wersji 2.3.x lub nowszej.
+Ruby installed in version 2.3.x or greater.
 
-## Instalacja
+## Installation
 
-Pobrać zawartość repozytorium.
+Fetch repository.
 
-## Konfiguracja
+## Configuration
 
-Konfiguracja znajduje się w pliku `./config.yml`.
+Configuration can be found in `./config.yml`
 
 ```yml
 toggl_sync:
@@ -29,13 +29,13 @@ toggl_sync:
     # account password
     password: 'password'
     # site
-    site:     'https://nomtek.atlassian.net'
+    site:     'https://jira.atlassian.com'
 
 ```
 
-## Używanie
+## Usage
 
-Każdy wpis z Toggl zawierający w swoim opisie `jira-issue-key` zostanie zsynchronizowany oraz oznaczony tag'iem (`jira-issue-key` zostanie usunięte z opisu).
+Each Toggl entry that contains `jira-issue-key` in the description will be synchronized and tagged (`jira-issue-key` will not be sent to jira as part of the description).
 
 ```
 NG-1 Meeting
@@ -43,19 +43,19 @@ very important time entry ng-101
 another sl-54 sophisticated example
 ```
 
-Wywołanie skryptu:
+Script call:
 
 ```ruby
-ruby toggl_sync.rb [metoda] [parametr]
+ruby toggl_sync.rb [method] [parameter]
 ```
 
-Dostępne są dwie metody `since` oraz `days_ago`.
+Right now two methods are supported: `since` and `days_ago`.
 
 ### since
 
-Skrypt można wywołać na dwa sposoby:
-- Bez parametru zostanie uruchomiona synchronizacja dzisiejszego dnia.
-- Z parametrem zostanie uruchomiona synchronizacja od podanej daty (dd-mm-yyyy).
+You can call the script in a two way:
+- Without parameter only today will be synchronized.
+- With parameter, all entries since specified date will be synchronized (dd-mm-yyyy).
 
 ```ruby
 ruby toggl_sync.rb since
@@ -64,16 +64,16 @@ ruby toggl_sync.rb since '15-01-2017'
 
 ### days_ago
 
-Skrypt można wywołać na dwa sposoby:
-- Bez parametru zostanie uruchomiona synchronizacja dzisiejszego dnia.
-- Z parametrem zostanie uruchomiona synchronizacja wskazanej ilości dni w przeszłość
+You can call the script in a two way:
+- Without parameter only today will be synchronized.
+- With parameter, specified number of days into the past will be synchronized.
 
 ```ruby
 ruby toggl_sync.rb days_ago
 ruby toggl_sync.rb days_ago 1
 ```
 
-## Licencja
+## License
 
 Copyright (c) 2017 Mariusz Kapcia
 
